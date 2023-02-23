@@ -1,102 +1,81 @@
-App Actions Example
-===
+This project was bootstrapped with [Create Contentful App](https://github.com/contentful/create-contentful-app).
 
-# Introduction
+## How to use
 
-App Actions are a new concept coming to the App Framework soon. At its core, app actions are very simple: They are a named endpoint in the backend of your app. However, their declarative, composable nature will allow them to be an incredibly useful tool in the Contentful platform. In the future, app actions will be able to:
+Execute create-contentful-app with npm, npx or yarn to bootstrap the example:
 
-* Extend our upcoming Workflows capabilities with apps
-* Extend our UI in a declarative way
-* Be a player in the automation story of Contentful
+```bash
+# npx
+npx create-contentful-app --example vite-react
 
-App Actions utilize existing features of the App Framework, such as being secured through [Request Verification](https://www.contentful.com/developers/docs/extensibility/app-framework/request-verification/) and being able to access content using [App Identities](https://www.contentful.com/developers/docs/extensibility/app-framework/app-identity/).
+# npm
+npm init contentful-app --example vite-react
 
-This example outlines how these pieces work together.
-
-You can find more information 
-[here](https://www.contentful.com/developers/docs/references/content-management-api/#/reference/app-actions).
-
-# About this Example
-
-Here we are showcasing how to build and host an App Action. In this example we are going to use the 
-[Fun Translations API](https://funtranslations.com/) in order to asynchronously translate the `title` field of your 
-entries into Star Wars languages.
-
-The core of the implementation lies in [`api/translations.ts`](src/pages/api/translations.ts).
-
-If you want to test it out before diving in the code, you can install the app here
-
-[![Install to Contentful](https://www.ctfstatic.com/button/install-small.svg)](https://app.contentful.com/deeplink?link=apps&id=Dcc7QJVP4zGCTcPwGoeCx)
-
-> **Note**
-> 
-> The linked app is meant as a preview. Maintenance is not planned, and it can break unexpectedly (for example, 
-> limits for Fun Translation API are shared among all the users of this app). Please follow the "Setup" steps, if you 
-> plan to bring a similar setup in production.
-
-_1. Choosing the language for translation (default to `mandalorian`)_
-![Choosing the language for translation](./docs/config.png)
-
-_2. Triggering the translation_
-![Triggering the translation](./docs/trigger.png)
-
-_3. Translated content_
-![Translated content](./docs/translated.png)
-
-## Setup
-
-The application is a [NextJS](https://nextjs.org/) web application that can be deployed on either Vercel or Netlify.
-
-### Entry Setup
-
-You only need entries with a `title` field. This is an example content type setup:
-![Content Type](./docs/content-type.png)
-
-### App Setup
-
-To run an app you would need to have an App Definition with App Config location enabled
-
-![App Definition - Location](./docs/app-config-1.png)
-
-with a key pair (for generating an App Token) and a signing secret (to trigger secure App Actions)
-
-![App Definition - Secrets](./docs/app-config-2.png)
-
-with App Actions of type Entry List, pointing to the hosting address of your app
-
-![App Definition - App Actions](./docs/app-config-3.png)
-
-> **Note**
-> 
-> If you want to run the app locally, you will need a publicly available HTTPS URL for your
-> backend endpoint. You can use tools such as [ngrok](https://ngrok.com/) or 
-> [localtunnel](https://localtunnel.github.io/www/) for that.
-
-## Deployment
-
-Make sure your environment is ready. Check out [`.env.example`](./.env.example) to see what variables
-are required to run this example.
-
-### Vercel
-
-1. Create a vercel project
-2. Install [vercel cli](https://vercel.com/docs/cli) and login
-3. Run `npm run deploy:vercel` and select the project you created earlier
-
-> **Note**
-> 
-> You may need to create the project in advance or follow the CLI guide
-
-### Netlify
-
-1. Install [NextJS plugin](https://www.netlify.com/with/nextjs/) in your Netlify project 
-2. Install [netlify cli](https://cli.netlify.com/)
-3. Run `npm run deploy:netlify` and select the project you set up before
-
-## Run Locally
-
-```shell
-$ npm start
+# Yarn
+yarn create contentful-app --example vite-react
 ```
 
-The app will run on `http://localhost:3000`.
+## Available Scripts
+
+In the project directory, you can run:
+
+#### `npm start`
+
+Creates or updates your app definition in Contentful, and runs the app in development mode.
+Open your app to view it in the browser.
+
+The page will reload if you make edits.
+You will also see any lint errors in the console.
+
+#### `npm run build`
+
+Builds the app for production to the `dist` folder.
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.
+Your app is ready to be deployed!
+
+#### `npm run upload`
+
+Uploads the `dist` folder to Contentful and creates a bundle that is automatically activated.
+The command guides you through the deployment process and asks for all required arguments.
+Read [here](https://www.contentful.com/developers/docs/extensibility/app-framework/create-contentful-app/#deploy-with-contentful) for more information about the deployment process.
+
+#### `npm run upload-ci`
+
+Similar to `npm run upload` it will upload your app to contentful and activate it. The only difference is   
+that with this command all required arguments are read from the environment variables, for example when you add
+the upload command to your CI pipeline.
+
+For this command to work, the following environment variables must be set: 
+
+- `CONTENTFUL_ORG_ID` - The ID of your organization
+- `CONTENTFUL_APP_DEF_ID` - The ID of the app to which to add the bundle
+- `CONTENTFUL_ACCESS_TOKEN` - A personal [access token](https://www.contentful.com/developers/docs/references/content-management-api/#/reference/personal-access-tokens)
+
+## Libraries to use
+
+To make your app look and feel like Contentful use the following libraries:
+
+- [Forma 36](https://f36.contentful.com/) – Contentful's design system
+- [Contentful Field Editors](https://www.contentful.com/developers/docs/extensibility/field-editors/) – Contentful's field editor React components
+
+## Using the `contentful-management` SDK
+
+In the default create contentful app output, a contentful management client is
+passed into each location. This can be used to interact with Contentful's
+management API. For example
+
+```js
+  // Use the client
+  cma.locale.getMany({}).then((locales) => console.log(locales))
+
+```
+
+Visit the [`contentful-management` documentation](https://www.contentful.com/developers/docs/extensibility/app-framework/sdk/#using-the-contentful-management-library)
+to find out more.
+
+## Learn More
+
+[Read more](https://www.contentful.com/developers/docs/extensibility/app-framework/create-contentful-app/) and check out the video on how to use the CLI.
+
